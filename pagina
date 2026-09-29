@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Iniciar sesión: Cuentas de Google</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#fff;--card:#fff;--text:#202124;--muted:#5f6368;--border:#dadce0;--blue:#1a73e8;--blueh:#1765cc;--focus:#e8f0fe}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#202124;--card:#292a2d;--text:#e8eaed;--muted:#9aa0a6;--border:#5f6368;--blue:#8ab4f8;--blueh:#99c9de;--focus:#3c4043}}
+:root[data-theme="dark"]{--bg:#202124;--card:#292a2d;--text:#e8eaed;--muted:#9aa0a6;--border:#5f6368;--blue:#8ab4f8;--blueh:#aecbfa;--focus:#3c4043}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:Roboto,Arial,sans-serif;display:flex;align-items:center;justify-content:center;padding:24px 16px}
+.wrap{width:100%;max-width:450px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:28px;padding:48px 40px 36px;display:none}
+.card.active{display:block}
+.logo{width:75px;height:24px;display:block;margin:0 auto 16px}
+h1{font-size:24px;font-weight:400;text-align:center;margin:0 0 8px}
+.sub{font-size:16px;text-align:center;color:var(--text);margin:0 0 24px}
+.who{display:flex;align-items:center;gap:12px;border:1px solid var(--border);border-radius:24px;padding:8px 16px;margin:0 0 24px;font-size:14px;width:fit-content;max-width:100%}
+.who .av{width:24px;height:24px;border-radius:50%;background:#1a73e8;color:#fff;display:grid;place-items:center;font-size:12px;flex:none}
+.field{position:relative;margin-bottom:6px}
+.field input{width:100%;height:56px;border:1px solid var(--border);border-radius:4px;padding:16px 15px 0;font-size:16px;background:var(--card);color:var(--text);outline:none}
+.field input:focus{border:2px solid var(--blue);padding:15px 14px 0}
+.field label{position:absolute;left:16px;top:17px;color:var(--muted);font-size:16px;pointer-events:none;transition:.1s ease;background:var(--card);padding:0 4px}
+.field input:focus~label,.field input:not(:placeholder-shown)~label{top:-9px;left:12px;font-size:12px;color:var(--blue)}
+.err{display:none;color:#d93025;font-size:12px;margin:4px 0 0 14px}
+.err.show{display:block}
+.showpw{margin:14px 0 0;font-size:14px;display:flex;align-items:center;gap:10px}
+.help{color:var(--blue);font-size:14px;font-weight:500;display:inline-block;margin-top:16px}
+.help:hover{text-decoration:underline;cursor:pointer}
+.row{display:flex;justify-content:space-between;align-items:center;margin-top:40px}
+.create{color:var(--blue);font-size:14px;font-weight:500;background:none;border:0;cursor:pointer;padding:8px}
+.create:hover{background:var(--focus);border-radius:4px}
+.next{background:var(--blue);color:#202124;border:0;border-radius:20px;height:36px;padding:0 24px;font-size:14px;font-weight:500;cursor:pointer;color:#fff}
+.next:hover{background:var(--blueh);box-shadow:0 1px 2px rgba(0,0,0,.3)}
+.foot{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);max-width:450px;width:100%;margin-top:20px;flex-wrap:wrap;gap:8px}
+.foot select{background:none;border:0;color:var(--muted);font-size:12px}
+.foot .r{display:flex;gap:24px}
+.note{background:#e8f0fe;color:#000000;font-size:20px;padding:10px 16px;border-radius:8px;text-align:center;margin-bottom:16px}
+:root[data-theme="dark"] .note,@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .note{background:#2d3236;color:#b2e7f7}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="card active" id="step1">
+    <svg class="logo" viewBox="0 0 75 24"><text x="0" y="19" font-family="Arial" font-size="22"><tspan fill="#4285F4">G</tspan><tspan fill="#EA4335">o</tspan><tspan fill="#FBBC05">o</tspan><tspan fill="#4285F4">g</tspan><tspan fill="#34A853">l</tspan><tspan fill="#EA4335">e</tspan></text></svg>
+    <h1>Iniciar sesión</h1>
+    <p class="sub">Ve a tu cuenta de Google</p>
+    <div class="note" id="demoNote">Usa tu correo institucional o personal para confirmar el usuario</div>
+    <div class="field">
+      <input type="email" id="email" placeholder=" " autocomplete="off">
+      <label for="email">Correo electrónico</label>
+    </div>
+    <div class="err" id="emailErr">Escribe un correo o número de teléfono válido.</div>
+    <a class="help" id="forgotEmail">¿Olvidaste tu correo?</a>
+    <p style="font-size:14px;color:var(--text);margin-top:16px">¿No es tu ordenador? Usa una ventana de navegación privada para iniciar sesión. <a class="help" style="display:inline" id="learnMore">Más información sobre cómo usar el modo invitado</a></p>
+    <div class="row">
+      <button class="create">Crear cuenta</button>
+      <button class="next" id="toStep2">Siguiente</button>
+    </div>
+  </div>
+
+  <div class="card" id="step2">
+    <svg class="logo" viewBox="0 0 75 24"><text x="0" y="19" font-family="Arial" font-size="22"><tspan fill="#4285F4">G</tspan><tspan fill="#EA4335">o</tspan><tspan fill="#FBBC05">o</tspan><tspan fill="#4285F4">g</tspan><tspan fill="#34A853">l</tspan><tspan fill="#EA4335">e</tspan></text></svg>
+    <h1>Bienvenido/a</h1>
+    <div class="who">
+      <span class="av" id="avatar">?</span>
+      <span id="whoEmail">usuario@ejemplo.com</span>
+    </div>
+    <div class="field">
+      <input type="password" id="pw" placeholder=" " autocomplete="off">
+      <label for="pw">Escribe tu contraseña</label>
+    </div>
+    <div class="err" id="pwErr">Contraseña incorrecta. Inténtalo de nuevo o haz clic en "¿Has olvidado tu contraseña?".</div>
+    <label class="showpw"><input type="checkbox" id="toggle"> Mostrar contraseña</label>
+    <a class="help" id="forgotPw">¿Has olvidado tu contraseña?</a>
+    <div class="row">
+      <button class="create" id="back">Atrás</button>
+      <button class="next" id="toStep3">Siguiente</button>
+    </div>
+  </div>
+
+  <div class="card" id="step3">
+    <svg class="logo" viewBox="0 0 75 24"><text x="0" y="19" font-family="Arial" font-size="22"><tspan fill="#4285F4">G</tspan><tspan fill="#EA4335">o</tspan><tspan fill="#FBBC05">o</tspan><tspan fill="#4285F4">g</tspan><tspan fill="#34A853">l</tspan><tspan fill="#EA4335">e</tspan></text></svg>
+    <h1 style="text-align:left">•No se puedo verficar el correo institucional o personal del esrudiante</h1>
+    <p class="sub" style="text-align:left">Asegúrate de estar usando tu correo institucional o personal correcto y que la contraseña sea la adecuada.</p>
+    <div class="row" style="justify-content:flex-end">
+      <button class="next" id="restart">Volver a empezar</button>
+    </div>
+  </div>
+
+  <div class="foot">
+    <span>Español (España)</span>
+    <div class="r"><span>Ayuda</span><span>Privacidad</span><span>Condiciones</span></div>
+  </div>
+</div>
+
+<script>
+var email='';
+function show(id){document.querySelectorAll('.card').forEach(function(c){c.classList.remove('active')});document.getElementById(id).classList.add('active')}
+
+document.getElementById('toStep2').addEventListener('click',function(){
+  var v=document.getElementById('email').value.trim();
+  var ok=v.length>2 && (v.includes('@') || /^[0-9 +()-]{6,}$/.test(v));
+  document.getElementById('emailErr').classList.toggle('show',!ok);
+  if(!ok)return;
+  email=v;
+  document.getElementById('whoEmail').textContent=v;
+  document.getElementById('avatar').textContent=v.charAt(0).toUpperCase();
+  document.getElementById('pwErr').classList.remove('show');
+  document.getElementById('pw').value='';
+  show('step2');
+});
+
+document.getElementById('back').addEventListener('click',function(){show('step1')});
+
+document.getElementById('toStep3').addEventListener('click',function(){
+  // Demo: cualquier contraseña de 1+ caracteres "funciona" y lleva al aviso final.
+  var v=document.getElementById('pw').value;
+  if(v.length===0){document.getElementById('pwErr').classList.add('show');return}
+  show('step3');
+});
+
+document.getElementById('restart').addEventListener('click',function(){
+  document.getElementById('email').value='';
+  document.getElementById('pw').value='';
+  document.getElementById('emailErr').classList.remove('show');
+  document.getElementById('pwErr').classList.remove('show');
+  show('step1');
+});
+
+document.getElementById('toggle').addEventListener('change',function(){
+  document.getElementById('pw').type=this.checked?'text':'password';
+});
+
+['forgotEmail','forgotPw','learnMore'].forEach(function(id){
+  document.getElementById(id).addEventListener('click',function(e){e.preventDefault()});
+});
+</script>
+</body>
+</html>
